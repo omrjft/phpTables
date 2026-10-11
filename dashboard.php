@@ -40,6 +40,7 @@ $calificaciones = $stmt->get_result();
     <header class="navbar">
         <div class="nav-container">
             <a href="dashboard.php" class="brand-badge" style="margin-bottom: 0;">
+                <span class="brand-icon"></span>
                 <span class="brand-title">Portal Escolar</span>
             </a>
             <div class="nav-user">
@@ -90,47 +91,22 @@ $calificaciones = $stmt->get_result();
                 <table>
                     <thead>
                         <tr>
-                            <th>Materia</th>
-                            <th>Calificación</th>
-                            <th>Estado</th>
+                            <th style="width: 50%;">Materia</th>
+                            <th style="width: 50%; text-align: right;">Calificación</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if ($calificaciones && $calificaciones->num_rows > 0): ?>
-                            <?php while ($fila = $calificaciones->fetch_assoc()): 
-                                $nota = (float)$fila['calificaciones'];
-                                $badgeClass = 'status-mint';
-                                $estadoTexto = 'Aprobado';
-                                if ($nota < 6.0) {
-                                    $badgeClass = 'status-apricot';
-                                    $estadoTexto = 'Reprobado';
-                                } elseif ($nota < 8.0) {
-                                    $badgeClass = 'status-sky';
-                                    $estadoTexto = 'Regular';
-                                }
-                            ?>
+                            <?php while ($fila = $calificaciones->fetch_assoc()): ?>
                                 <tr>
-                                    <td>
-                                        <strong style="font-weight: 500;">
-                                            <?php echo htmlspecialchars($fila['materia']); ?>
-                                        </strong>
-                                    </td>
-                                    <td>
-                                        <span style="font-weight: 600;">
-                                            <?php echo number_format($nota, 2); ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="status-pill <?php echo $badgeClass; ?>">
-                                            <?php echo $estadoTexto; ?>
-                                        </span>
-                                    </td>
+                                    <td><?php echo htmlspecialchars($fila['materia']); ?></td>
+                                    <td style="text-align: right;"><?php echo htmlspecialchars($fila['calificaciones']); ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="3" class="empty-state">
-                                    No se encontraron materias ni calificaciones registradas para este alumno.
+                                <td colspan="2" class="empty-state">
+                                    No se encontraron materias ni calificaciones registradas.
                                 </td>
                             </tr>
                         <?php endif; ?>
